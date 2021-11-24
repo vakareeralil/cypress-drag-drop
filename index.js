@@ -58,21 +58,20 @@ const DragSimulator = {
   },
   drop({ clientX, clientY } = {}) {
     return this.target
-      .trigger('drop', {
+      .trigger('drop', this.options.target.position, {
         dataTransfer,
         eventConstructor: 'DragEvent',
-        ...this.options.target,
+        ...this.options.target.position,
       })
       .then(() => {
         if (isAttached(this.targetElement)) {
           this.target
-            .trigger('mouseup', {
+            .trigger('mouseup', this.options.target.position,{
               which: 1,
               button: 0,
               clientX,
               clientY,
               eventConstructor: 'MouseEvent',
-              ...this.options.target,
             })
             .then(() => {
               if (isAttached(this.targetElement)) {
